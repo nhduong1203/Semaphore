@@ -1,29 +1,22 @@
-# Bài tập lớn nhập môn Trí tuệ nhân tạo
+# Mô hình hóa bài toán
+Sẽ có các biến sau đây trong bài toán Constraints Programming
 
-## Hướng dẫn chạy chương trình
+Chúng ta sẽ có các biến sau đây
+- $x[i]$ thể hiện kíp thi cho môn $i$ trong đó $i \in \{0,...,N-1\},\  D(x[i])=\{0,...,N-1\}$
+- $y[i][j]$ thể hiện môn $i$ được xếp vào phòng $j$ trong đó $i \in \{0,...,N-1\}, j \in \{0,...,M-1\}, D(y[i][j])=\{0,1\}$
+- Gọi $C$ là tập các môn học $(i, j)$ mà không thể xếp cùng kíp.
 
-- Sử dụng VSCode, cài đặt extension Live Server
-![image](https://user-images.githubusercontent.com/80820585/177044306-4a9565d7-7896-4c7c-8868-c90b3d930bfd.png)
+Mục tiêu của bài toán là minimize $max(x) \rightarrow min$.
 
-- Vào file index.html, click chuột phải, chọn Open with Live Server
-![image](https://user-images.githubusercontent.com/80820585/177044353-53cacdf8-9993-4f5b-b190-4827705a5015.png)
+Chúng ta có các rằng buộc gốc cho bài toán như sau
 
-- Kết quả:
-![image](https://user-images.githubusercontent.com/80820585/177044425-a9eb4049-c4f6-461b-b7e0-096d028df880.png)
-
-
-## Hướng dẫn chạy train tham số cho thuật toán GA.
-
-- Mở Dev Tool trên cửa sổ đang chạy Shift + Ctrl + J (Google Chrome) hoặc F12 (Edge)
-
-- Chạy lệnh "new Trainer().train();"
-![image](https://user-images.githubusercontent.com/80820585/177044511-b52b2718-e967-4024-a791-90c7d4e47d46.png)
-
-## Hướng dẫn thay bộ tham số thu được để chạy bot:
-
-- Vào file game_manager.js
-
-- Thay bộ tham số thu được vào phần khởi tạo Bot 
-![image](https://user-images.githubusercontent.com/80820585/177044635-e05d2c35-21b3-45ce-b001-bf12060982d4.png)
-
-
+1. Hai môn cùng kíp thi không được xếp cùng phòng
+$$ \forall i1,i2 \in {1,...,N}, j \in {1,...,M}, x[i1]=x[i2] \Rightarrow y[i1][j] + y[i2][j] \le 1 $$
+2. Mỗi phòng chỉ có thể được xếp tối đa 1 môn trong 1 kíp
+$$\sum_{j=0}^{M-1} y[i][j]=1; \forall i \in \{1,...,N\}$$
+1. Xếp các môn thi $i$ vào phòng thi $j$ có sức chưa $c[j]$ phù hợp:
+$$\sum_{k=0}^{M-1} y[i][j] * c[i] \ge d[j]; \ \ \ \forall \ i=0...M-1$$
+1. Hai môn thi conflict với nhau không thể xếp cùng 1 kíp
+$$\forall(i,j) \in C \Rightarrow x[i] \neq x[j[$$
+Ngoài ra chúng ta có rằng buộc cho biến mục tiêu
+$$x[i][j][k] * k <= y; \forall j=0...M-1; i,k=0...N-1$$
